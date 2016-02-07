@@ -1,6 +1,39 @@
 var loaded_config_array = new Array();
 var violations_array = new Array();
 
+// Generic async loop
+function async_loop(iterations, func, callback) {
+    var index = 0;
+    var done = false;
+    var loop = {
+        next: function() {
+            if (done) {
+                return;
+            }
+
+            if (index < iterations) {
+                index++;
+                func(loop);
+
+            } else {
+                done = true;
+                callback();
+            }
+        },
+
+        iteration: function() {
+            return index - 1;
+        },
+
+        break: function() {
+            done = true;
+            callback();
+        }
+    };
+    loop.next();
+    return loop;
+}
+
 // Generic load JSON function
 function load_aws_config_from_json(list, keyword, cols) {
     var id1 = '#' + keyword + '-list-template';
@@ -15,33 +48,42 @@ function load_aws_config_from_json(list, keyword, cols) {
     }
 }
 
-// Generic highlight finding function
-function highlight_violations(violations, keyword) {
-    for (i in violations) {
-        var read_macro_items = false;
-        var vkey = violations[i]['keyword_prefix'] + '_' + violations[i]['entity'].split('.').pop() + '-' + i;
-        violations_array[vkey] = new Array();
-        if (violations[i]['macro_items'].length == violations[i]['items'].length ) {
-            read_macro_items = true;
+// Async load violations
+function async_violations_load(violations, i, callback) {
+    var read_macro_items = false;
+    var vkey = violations[i]['keyword_prefix'] + '_' + violations[i]['entity'].split('.').pop() + '-' + i;
+    violations_array[vkey] = new Array();
+    if (violations[i]['macro_items'].length == violations[i]['items'].length ) {
+        read_macro_items = true;
+    }
+    for (j in violations[i]['items']) {
+        var id = vkey;
+        if (read_macro_items) {
+            id = id + '-' + violations[i]['macro_items'][j];
         }
-        for (j in violations[i]['items']) {
-            var id = vkey;
-            if (read_macro_items) {
-                id = id + '-' + violations[i]['macro_items'][j];
-            }
-            id = id + '-' + violations[i]['items'][j];
-            if ($('[id$="' + id + '"]').hasClass("badge")) {
-                $('[id$="' + id + '"]').addClass('btn-' + violations[i]['level']);
-            } else {
-                $('[id$="' + id + '"]').addClass('finding-' + violations[i]['level']);
-            }
-            if (read_macro_items) {
-                violations_array[vkey].push(violations[i]['macro_items'][j]);
-            } else {
-                violations_array[vkey].push(violations[i]['items'][j]);
-            }
+        id = id + '-' + violations[i]['items'][j];
+        if ($('[id$="' + id + '"]').hasClass("badge")) {
+            $('[id$="' + id + '"]').addClass('btn-' + violations[i]['level']);
+        } else {
+            $('[id$="' + id + '"]').addClass('finding-' + violations[i]['level']);
+        }
+        if (read_macro_items) {
+            violations_array[vkey].push(violations[i]['macro_items'][j]);
+        } else {
+            violations_array[vkey].push(violations[i]['items'][j]);
         }
     }
+    callback();
+}
+
+// Generic highlight finding function
+function highlight_violations(violations, keyword) {
+    async_loop(violations.length, function(loop) {
+        async_violations_load(violations, loop.iterations(), function(result) {
+            loop.next();
+        })},
+        function(){}
+    );
     load_aws_config_from_json(violations, keyword + '_violation', 1);
 }
 
