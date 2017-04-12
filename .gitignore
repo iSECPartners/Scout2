@@ -44,4 +44,4 @@ nosetests.xml
 
 # Data folder and files
 inc-awsconfig*
-report-*
+report*
