@@ -45,4 +45,4 @@ nosetests.xml
 # Data folder and files
 scout2-report*
 inc-awsconfig*
-report-*
+report*
