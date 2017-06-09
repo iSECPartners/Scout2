@@ -1,0 +1,15 @@
+<h4>Items with Issues</h4>
+<% for(var service in services) { %>
+    <% var serviceSummary = last_run.summary[service]; %>
+    <% var serviceData = services[service]; %>
+    <% if(!serviceSummary.rules_count || !serviceSummary.checked_items || !services[service].findings) {
+        continue;
+    }%>
+    <% for(var finding in serviceData.findings) { %>
+        <% var findingData = serviceData.findings[finding]; %>
+        <% if(!findingData.items || !findingData.items.length) {
+            continue;
+        }%>
+        <%- include('issuesTable', {findingData: findingData, serviceData: serviceData}) %>
+    <% } %>
+<% } %>

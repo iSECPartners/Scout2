@@ -1,0 +1,27 @@
+{
+  "name": "generate-pdf",
+  "version": "0.0.1",
+  "description": "Nodsjs based PDF report generator for Scout 2",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tensult/Scout2.git"
+  },
+  "keywords": [
+    "Scout",
+    "2",
+    "PDF",
+    "AWS",
+    "Security"
+  ],
+  "author": "dilip@tensult.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tensult/Scout2/issues"
+  },
+  "homepage": "https://github.com/tensult/Scout2#readme",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "html-pdf": "^2.1.0"
+  }
+}
