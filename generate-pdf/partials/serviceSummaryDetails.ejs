@@ -1,0 +1,30 @@
+<div class="summaryTable">
+    <div class="summaryTableRow">
+        <div class="summaryTableHead"><strong>Best Practice</strong></div>
+        <div class="summaryTableHead"><strong>Checks Done</strong></div>
+        <div class="summaryTableHead"><strong>Issues Found</strong></div>
+    </div>
+    <div class="summaryTableBody">
+    <% for(var finding in serviceDetailedSummary.findings) { %>
+        <% var findingData = serviceDetailedSummary.findings[finding]; %>
+        <% var clazz = findingData.flagged_items? findingData.level: 'green';%>
+        <div class="summaryTableRow <%= clazz %>">
+            <div class="summaryTableCell">
+                <span class="rule">
+                    <%= findingData.description %>
+                </span>
+            </div>
+            <div class="summaryTableCell">
+                <div class="checks">
+                    <%= findingData.checked_items %>
+                </div>
+            </div>
+            <div class="summaryTableCell">
+                <span class="issues">
+                    <%= findingData.flagged_items %>
+                </span>
+            </div>
+        </div> <!-- summaryTableRow -->
+    <% } %>
+    </div> <!-- summaryTableBody -->
+</div> <!-- summaryTable -->

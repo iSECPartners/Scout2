@@ -1,0 +1,12 @@
+<h3>Detailed Summary</h3>
+<% for(var service in services) { %>
+    <% var serviceDetailedSummary = services[service]; %>
+    <% var serviceSummary = last_run.summary[service]; %>
+    <% if(!serviceSummary.rules_count || !serviceSummary.checked_items) {
+        continue;
+    } %>
+    <div class="serviceDetails" id="<%= service %>">
+        <h4 class="service"><a name="<%= service%>"><%= service %></a></h4>
+        <%- include('serviceSummaryDetails', {serviceDetailedSummary: serviceDetailedSummary}) %>
+    </div>
+<% } %>

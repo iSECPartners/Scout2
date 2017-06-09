@@ -46,3 +46,9 @@ nosetests.xml
 scout2-report*
 inc-awsconfig*
 report-*
+report.html
+report.pdf
+
+#node
+node_modules
+package-lock.json

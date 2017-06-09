@@ -1,0 +1,46 @@
+<div class="overall">
+    <div class="header">
+        <h3>Overall Summary</h3>
+        <strong>Generated on: <%= last_run.time %></strong>
+    </div>
+    <div class="summaryTable">
+        <div class="summaryTableRow">
+            <div class="summaryTableHead"><strong>Service</strong></div>
+            <div class="summaryTableHead"><strong>Best Practices</strong></div>
+            <div class="summaryTableHead"><strong>Checks Done</strong></div>
+            <div class="summaryTableHead"><strong>Issues Found</strong></div>
+        </div>
+        <div class="summaryTableBody">
+        <% for(var service in last_run.summary) { %>
+            <% var serviceData = last_run.summary[service]; %>
+            <% if(!serviceData.rules_count || !serviceData.checked_items) {
+                continue;
+            }%>
+            <% var clazz = serviceData.flagged_items? serviceData.max_level: 'green';%>
+            <div class="summaryTableRow <%= clazz %>">
+                <div class="summaryTableCell">
+                    <span class="service normal">
+                        <%= service %>
+                    </span>
+                </div>
+                <div class="summaryTableCell">
+                    <div class="rules">
+                        <%= serviceData.rules_count %>
+                    </div>
+                </div>
+                <div class="summaryTableCell">
+                    <span class="checks">
+                        <%= serviceData.checked_items %>
+                    </span>
+                </div>
+                <div class="summaryTableCell">
+                    <span class="issues">
+                        <%= serviceData.flagged_items %>
+                    </span>
+                </div>
+
+            </div> <!-- summaryTableRow -->
+            <% } %>
+        </div> <!-- summaryTableBody -->
+    </div> <!-- summaryTable -->
+</div>

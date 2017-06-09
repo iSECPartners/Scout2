@@ -1,0 +1,57 @@
+<div class="summaryTable issueTable">
+    <div class="summaryTableHeading <%= findingData.level %>">
+        <span class="service normal"><%= findingData.service %>:</span>
+        <span class="title"><%= findingData.description %></span>
+    </div>
+</div>
+    <% if(findingData.rationale && findingData.rationale != 'N/A') { %>
+      <div>
+        <span class="explanation"><%= findingData.rationale %></span>
+      </div>
+    <% } %>
+<div class="summaryTable">
+     <div class="summaryTableRow">
+        <% for(var p=0; p < findingData.itemHeader.length; p++) { %>
+          <div class="summaryTableHead"><strong><%= findingData.itemHeader[p] %></strong></div>
+        <% } %>
+    </div>
+    <div class="summaryTableBody">
+    <% var itemPaths = []; %>
+    <% for(var i=0; i < findingData.itemsDetails.length; i++)  { %>
+        <% var itemDetails = findingData.itemsDetails[i]; 
+          if(!itemDetails.itemValuesForDisplay) { %>
+            <div class="summaryTableRow">
+              <%= JSON.stringify(itemDetails) %>
+            </div>
+        <%
+            continue;    
+          }
+        %>
+        
+        <%  var currItemPath = itemDetails.itemValuesForDisplay.join('.');
+            if(itemPaths.indexOf(currItemPath) != -1) {
+              continue;
+            }
+            itemPaths.push(currItemPath);
+        %>
+        <div class="summaryTableRow">
+            <% for(var p=0; p < itemDetails.itemValuesForDisplay.length-1; p++) { %>
+              <div class="summaryTableCell">
+                <span>
+                    <%= itemDetails.itemValuesForDisplay[p] %>
+                </span>
+              </div>
+            <% } %>
+            <div class="summaryTableCell">
+                <span>
+                    <% if(findingData.service == 's3' || findingData.service == 'iam') { %>
+                      <%= itemDetails.name %>
+                    <% } else { %>
+                      <%= itemDetails.id ? itemDetails.id + ' |': '' %><%= itemDetails.name %>
+                    <% } %>
+                </span>
+              </div>
+        </div> <!-- summaryTableRow -->
+        <% } %>
+    </div> <!-- summaryTableBody -->
+</div> <!-- summaryTable -->
