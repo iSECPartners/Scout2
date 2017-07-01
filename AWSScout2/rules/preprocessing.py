@@ -10,7 +10,6 @@ from AWSScout2.utils import ec2_classic
 from AWSScout2.services.vpc import put_cidr_name
 
 
-
 def preprocessing(aws_config, ip_ranges = [], ip_ranges_name_key = None):
     """
     Tweak the AWS config to match cross-service resources and clean any fetching artifacts
@@ -112,11 +111,15 @@ def process_network_acls_check_for_allow_all(network_acl, direction):
 
 
 def process_network_acls_check_for_default(network_acl, direction):
-    if len(network_acl['rules'][direction]) != 2 and network_acl['allow_all_%s_traffic' % direction] != False:
-        network_acl['use_default_%s_rules' % direction] = False
-    else:
-        # Assume it's the default rules because 2 rules and there's an allow all
+    #if len(network_acl['rules'][direction]) != 2 and network_acl['allow_all_%s_traffic' % direction] != False:
+    #    network_acl['use_default_%s_rules' % direction] = False
+    #else:
+    #    # Assume it's the default rules because 2 rules and there's an allow all
+    #    network_acl['use_default_%s_rules' % direction] = True
+    if network_acl['IsDefault'] == True:
         network_acl['use_default_%s_rules' % direction] = True
+    else:
+        network_acl['use_default_%s_rules' % direction] = False
 
 
 def list_ec2_network_attack_surface(ec2_config):
