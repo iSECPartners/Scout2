@@ -3,7 +3,7 @@
 Base classes and functions for region-specific services
 """
 
-import re
+import re, time
 
 from threading import Event, Thread
 # Python2 vs Python3
@@ -85,9 +85,9 @@ class RegionalServiceConfig(object):
         regions = build_region_list(api_service, regions, partition_name) # TODO: move this code within this class
         self.fetchstatuslogger.counts['regions']['discovered'] = len(regions)
         # Threading to fetch & parse resources (queue consumer)
-        q = self._init_threading(self._fetch_target, {}, 20)
+        q = self._init_threading(self._fetch_target, {}, 1)
         # Threading to list resources (queue feeder)
-        qr = self._init_threading(self._fetch_region, {'api_service': api_service, 'credentials': credentials, 'q': q, 'targets': targets}, 10)
+        qr = self._init_threading(self._fetch_region, {'api_service': api_service, 'credentials': credentials, 'q': q, 'targets': targets}, 1)
         # Go
         for region in regions:
             qr.put(region)
@@ -97,7 +97,7 @@ class RegionalServiceConfig(object):
         # Show completion and force newline
         self.fetchstatuslogger.show(True)
 
-    def _init_threading(self, function, params={}, num_threads=10):
+    def _init_threading(self, function, params={}, num_threads=1):
             # Init queue and threads
             q = Queue(maxsize=0) # TODO: find something appropriate
             if not num_threads:
