@@ -25,7 +25,6 @@ from AWSScout2.rules.exceptions import process_exceptions
 from AWSScout2.rules.ruleset import Ruleset
 from AWSScout2.rules.preprocessing import preprocessing
 from AWSScout2.rules.postprocessing import postprocessing
-from AWSScout2.rules.processingengine import ProcessingEngine
 
 
 ########################################
@@ -90,20 +89,18 @@ def main():
     preprocessing(aws_config, args.ip_ranges, args.ip_ranges_name_key)
 
     # Analyze config
-    finding_rules = Ruleset(profile_name, filename = args.ruleset, ip_ranges = args.ip_ranges)
-    pe = ProcessingEngine(finding_rules)
-    pe.run(aws_config)
+    ruleset = Ruleset(profile_name, filename = args.ruleset, ip_ranges = args.ip_ranges)
+    ruleset.analyze(aws_config)
 
     # Create display filters
-    filter_rules = Ruleset(filename = 'filters.json', rule_type = 'filters')
-    pe = ProcessingEngine(filter_rules)
-    pe.run(aws_config)
+    filters = Ruleset(filename = 'filters.json', rule_type = 'filters')
+    filters.analyze(aws_config)
 
     # Handle exceptions
     process_exceptions(aws_config, args.exceptions[0])
 
     # Finalize
-    postprocessing(aws_config, report.current_time, finding_rules)
+    postprocessing(aws_config, report.current_time, ruleset)
 
     # Save config and create HTML report
     html_report_path = report.save(aws_config, {}, args.force_write, args.debug)

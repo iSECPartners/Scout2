@@ -253,7 +253,7 @@ def get_s3_buckets(api_client, s3_info, s3_params):
     s3_info['buckets_count'] = len(targets)
     s3_params['api_clients'] = api_client
     s3_params['s3_info'] = s3_info
-    thread_work(targets, get_s3_bucket, params = s3_params, num_threads = 30)
+    thread_work(targets, get_s3_bucket, params = s3_params, num_threads = 1)
     show_status(s3_info)
     s3_info['buckets_count'] = len(s3_info['buckets'])
     return s3_info

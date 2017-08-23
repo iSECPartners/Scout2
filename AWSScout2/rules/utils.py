@@ -7,7 +7,7 @@ import copy
 import re
 
 from opinel.utils.conditions import pass_condition
-from opinel.utils.console import printError, printException
+from opinel.utils.console import printError
 from opinel.utils.globals import manage_dictionary
 
 from AWSScout2.rules import condition_operators
@@ -16,15 +16,6 @@ from AWSScout2.configs.browser import get_value_at
 
 
 re_get_value_at = re.compile(r'_GET_VALUE_AT_\((.*?)\)')
-
-
-def fix_path_string(all_info, current_path, path_to_value):
-    dynamic_path = re_get_value_at.findall(path_to_value)
-    if dynamic_path:
-        for dp in dynamic_path:
-            dv = get_value_at(all_info, current_path, dp)
-            path_to_value = path_to_value.replace('_GET_VALUE_AT_(%s)' % dp, dv)
-    return path_to_value
 
 
 def recurse(all_info, current_info, target_path, current_path, config, add_suffix = False):
@@ -41,14 +32,15 @@ def recurse(all_info, current_info, target_path, current_path, config, add_suffi
     results = []
     if len(target_path) == 0:
         # Dashboard: count the number of processed resources here
-        setattr(config, 'checked_items', getattr(config, 'checked_items') + 1)
+        manage_dictionary(config, 'checked_items', 0)
+        config['checked_items'] = config['checked_items'] + 1
         # Test for conditions...
-        if pass_conditions(all_info, current_path, copy.deepcopy(config.conditions)):
-            if add_suffix and hasattr(config, 'id_suffix'):
-                suffix = fix_path_string(all_info, current_path, config.id_suffix)
-                current_path.append(suffix)
+        if pass_conditions(all_info, current_path, copy.deepcopy(config['conditions'])):
+            if add_suffix and 'id_suffix' in config:
+                current_path.append(config['id_suffix'])
             results.append('.'.join(current_path))
         # Return the flagged items...
+        config['flagged_items'] = len(results)
         return results
     target_path = copy.deepcopy(target_path)
     dbg_target_path = copy.deepcopy(target_path)
@@ -81,14 +73,13 @@ def recurse(all_info, current_info, target_path, current_path, config, add_suffi
     return results
 
 
-def pass_conditions(all_info, current_path, conditions, unknown_as_pass_condition = False):
+def pass_conditions(all_info, current_path, conditions):
     """
     Pass all conditions?
 
     :param all_info:
     :param current_path:
     :param conditions:
-    :param unknown_as_pass_condition:   Consider an undetermined condition as passed
     :return:
     """
     result = False
@@ -97,22 +88,21 @@ def pass_conditions(all_info, current_path, conditions, unknown_as_pass_conditio
     condition_operator = conditions.pop(0)
     for condition in conditions:
       if condition[0] in condition_operators:
-        res = pass_conditions(all_info, current_path, condition, unknown_as_pass_condition)
+        res = pass_conditions(all_info, current_path, condition)
       else:
         # Conditions are formed as "path to value", "type of test", "value(s) for test"
         path_to_value, test_name, test_values = condition
-        path_to_value = fix_path_string(all_info, current_path, path_to_value)
+        dynamic_path = re_get_value_at.findall(path_to_value)
+        if dynamic_path:
+            for dp in dynamic_path:
+                dv = get_value_at(all_info, current_path, dp)
+                path_to_value = path_to_value.replace('_GET_VALUE_AT_(%s)' % dp, dv)
         target_obj = get_value_at(all_info, current_path, path_to_value)
         if type(test_values) != list:
             dynamic_value = re_get_value_at.match(test_values)
             if dynamic_value:
                 test_values = get_value_at(all_info, current_path, dynamic_value.groups()[0], True)
-        try:
-            res = pass_condition(target_obj, test_name, test_values)
-        except Exception as e:
-            res = True if unknown_as_pass_condition else False
-            printError('Unable to process testcase \'%s\' on value \'%s\', interpreted as %s.' % (test_name, str(target_obj), res))
-            printException(e, True)
+        res = pass_condition(target_obj, test_name, test_values)
       # Quick exit and + false
       if condition_operator == 'and' and not res:
           return False

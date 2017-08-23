@@ -14,6 +14,8 @@ from opinel.utils.console import printException, printInfo
 from AWSScout2.output.console import FetchStatusLogger
 from AWSScout2.utils import format_service_name
 
+import time
+
 ########################################
 # Globals
 ########################################
@@ -41,7 +43,7 @@ class BaseConfig(GlobalConfig):
     """
     FooBar
     """
-    
+
     def __init__(self):
         self.service = type(self).__name__.replace('Config', '').lower()  # TODO: use regex with EOS instead of plain replace
 
@@ -78,12 +80,12 @@ class BaseConfig(GlobalConfig):
         params = {'api_client': api_client}
         if self.service in ['s3']:
             params['api_clients'] = api_clients
-        q = self._init_threading(self.__fetch_target, params, 20)
+        q = self._init_threading(self.__fetch_target, params, 1)
         # Threading to list resources (queue feeder)
         params = {'api_client': api_client, 'q': q}
         if self.service in ['s3']:
             params['api_clients'] = api_clients
-        qt = self._init_threading(self.__fetch_service, params, 10)
+        qt = self._init_threading(self.__fetch_service, params, 1)
         # Init display
         self.fetchstatuslogger = FetchStatusLogger(targets)
         # Go
@@ -103,7 +105,7 @@ class BaseConfig(GlobalConfig):
         self.__delattr__('fetchstatuslogger')
 
 
-    def _init_threading(self, function, params={}, num_threads=10):
+    def _init_threading(self, function, params={}, num_threads=1):
             # Init queue and threads
             q = Queue(maxsize=0) # TODO: find something appropriate
             if not num_threads:
