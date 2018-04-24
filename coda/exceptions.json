@@ -1,0 +1,144 @@
+exceptions = 
+{
+    "ec2": {
+        "ec2-security-group-opens-all-ports": [
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-a717eec0.rules.ingress.protocols.ALL.ports.N/A",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-d7d555a9.rules.ingress.protocols.TCP.ports.0-65535",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-eb860695.rules.ingress.protocols.TCP.ports.0-65535",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-f817ee9f.rules.ingress.protocols.ALL.ports.N/A"
+        ],
+        "ec2-security-group-opens-all-ports-to-self": [
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-eb860695.rules.ingress.protocols.TCP.ports.0-65535.security_groups.0",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-d7d555a9.rules.ingress.protocols.TCP.ports.0-65535.security_groups.0",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-a717eec0.rules.ingress.protocols.ALL.ports.N/A.security_groups.0"
+        ],
+        "ec2-security-group-opens-port-range": [
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-a717eec0.rules.ingress.protocols.TCP.ports.30000-32768"
+        ],
+        "ec2-security-group-whitelists-aws": [
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-a67c7cdb.rules.ingress.protocols.TCP.ports.5439.cidrs.0.CIDR",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-6e347010.rules.ingress.protocols.TCP.ports.5439.cidrs.0.CIDR",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-6e347010.rules.ingress.protocols.TCP.ports.5439.cidrs.1.CIDR",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-6e347010.rules.ingress.protocols.TCP.ports.5439.cidrs.2.CIDR",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-6e347010.rules.ingress.protocols.TCP.ports.5439.cidrs.3.CIDR",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-6e347010.rules.ingress.protocols.TCP.ports.5439.cidrs.4.CIDR",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-6e347010.rules.ingress.protocols.TCP.ports.5439.cidrs.5.CIDR"
+        ],
+        "ec2-unused-security-group": [
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-d7d555a9",
+            "ec2.regions.us-west-2.vpcs.vpc-5a1a583f.security_groups.sg-eb860695"
+        ],
+        "ec2-security-group-opens-TCP-port-to-all": [
+            "ec2.regions.us-west-2.vpcs.vpc-230afa46.security_groups.sg-880420ec.rules.ingress.protocols.TCP.ports.9099.cidrs.0.CIDR"
+        ]
+    },
+    "iam": {
+        "iam-managed-policy-allows-iam-PassRole": [
+            "iam.policies.ANPAIC5D2V7MRWBMHGD7G.PolicyDocument.Statement.1",
+            "iam.policies.ANPAIKCP6XS3ESGF4GLO2.PolicyDocument.Statement.0"
+        ],
+        "iam-role-with-inline-policies": [
+            "iam.roles.AROAJYC743DTQPVJ4RBJM.inline_policies",
+            "iam.roles.AROAJWAIMXH6J4WUBK36I.inline_policies",
+            "iam.roles.AROAJAFKWJCUZTVGEXCC6.inline_policies",
+            "iam.roles.AROAJ6COKQRYO3K3XSW5U.inline_policies",
+            "iam.roles.AROAIYCAIFNZMPQCL7FKA.inline_policies",
+            "iam.roles.AROAINJNY6ZFEYQ2US2GM.inline_policies",
+            "iam.roles.AROAIIYF7UIUP7DSYYHSK.inline_policies",
+            "iam.roles.AROAIC3B3NVN6YVLV773A.inline_policies",
+            "iam.roles.AROAI46US26CUEAT3ODKY.inline_policies"
+        ],
+        "iam-user-with-inline-policies": [
+            "iam.users.AIDAJ7ZYYGUDOROY64TR6.inline_policies",
+            "iam.users.AIDAIQCSAIXSLUFEIDPYQ.inline_policies"
+        ]
+    },
+    "rds": {
+        "rds-instance-no-minor-upgrade": [
+            "rds.regions.us-west-2.vpcs.vpc-5a1a583f.instances.kr1b5zrmi7z5t7e.AutoMinorVersionUpgrade",
+            "rds.regions.us-west-2.vpcs.vpc-5a1a583f.instances.kr1q7n7l6ud6jsq.AutoMinorVersionUpgrade",
+            "rds.regions.us-west-2.vpcs.vpc-5a1a583f.instances.kr1w7vqek664iks.AutoMinorVersionUpgrade"
+        ]
+    },
+    "redshift": {
+        "redshift-cluster-publicly-accessible": [
+            "redshift.regions.us-west-2.vpcs.vpc-5a1a583f.clusters.kr-app-env-globals-us-west-2-redshiftcluster-g2h4vy2rnjif.PubliclyAccessible"
+        ],
+        "redshift-parameter-group-logging-disabled": [
+            "redshift.regions.us-west-2.parameter_groups.cf1eb88c6b50532f9176f3a3a4eb587159ddebc1.enable_user_activity_logging"
+        ],
+        "redshift-parameter-group-ssl-not-required": [
+            "redshift.regions.us-west-2.parameter_groups.cf1eb88c6b50532f9176f3a3a4eb587159ddebc1.require_ssl"
+        ]
+    },
+    "route53": {
+        "route53-domain-transferlock-not-authorized": [
+            "route53.domains.57130690be67a2e82709111a56c3e4b8060bea1c.TransferLockNotAuthorized"
+        ]
+    },
+    "s3": {
+        "s3-bucket-no-mfa-delete": [
+            "s3.buckets.4f952f841e0c81b9561b4099aaac72708d80721e.mfa_delete",
+            "s3.buckets.72483e3bf3b78c7d93bce65d5a31b563a6d40cc2.mfa_delete",
+            "s3.buckets.93bc900e332dabc0b346bc013761a4447fb1288f.mfa_delete"
+        ],
+        "s3-bucket-no-versioning": [
+            "s3.buckets.05d64cbe13737612979384e04838e3ff073ac73c.versioning",
+            "s3.buckets.1c37878cf051d5f8d35df0a518659c88e5a4794c.versioning",
+            "s3.buckets.204acdb94bdb6c8954f387918cb7a45bdb63746c.versioning",
+            "s3.buckets.295358d8eaf864b8692a4f10c992b11d9c708354.versioning",
+            "s3.buckets.2f8f6780a1a537549b2b1b10784bbc78711148b4.versioning",
+            "s3.buckets.35933bece106e648736f5e446d8e388fc35dac2e.versioning",
+            "s3.buckets.3e68a6111b1686e772eaa7e2732791ee322cf658.versioning",
+            "s3.buckets.3e6d4940e3742216647922ce8afa01e4231a696d.versioning",
+            "s3.buckets.6e9d829a546e49bda8943d703ffe0962c6fe2512.versioning",
+            "s3.buckets.79a09b1427612319d1184255cbc10fbcdda2d55c.versioning",
+            "s3.buckets.7c64a58663e3498847f1a2854c5a7ea5542264d9.versioning",
+            "s3.buckets.880b21728257ffef8d6200dc4d86441d0e998ee4.versioning",
+            "s3.buckets.8babccdd5dda1ef18d92b4a5e96b6fafd7f8aef7.versioning",
+            "s3.buckets.97207b4eb5bb94e9eab5b3d1cd0acbff4c2c42ee.versioning",
+            "s3.buckets.9b56cb529c2351272b4ae32fd125b37dfd31a0f4.versioning",
+            "s3.buckets.9c7c2151fec3ecc9e577cb58db1c1675a47be274.versioning",
+            "s3.buckets.a2ffa962d9ac2d24af3cd2cb98008e1c38284cbd.versioning",
+            "s3.buckets.a97e752214401b35ed075b3e906ee0849628e1cb.versioning",
+            "s3.buckets.ad41c0c0b4263fb3c0e1c594ad355a7d044c7071.versioning",
+            "s3.buckets.afc68f20a9b67deac373895035757a2c11b01c6c.versioning",
+            "s3.buckets.c5c05e78bc35f84ec5332a8a04ce38db15ad9fe3.versioning",
+            "s3.buckets.d7aa00bbb7e785ad483a336af954a6727edf0f2b.versioning",
+            "s3.buckets.e479a029751a6b30df436049ef7f602c1766d33d.versioning",
+            "s3.buckets.e5ff23dc1e9798829c144473ca2c7c6a4ce0be75.versioning",
+            "s3.buckets.e8abe38d03f75ca220f99e57995d68072dbb904c.versioning",
+            "s3.buckets.f899e59703d13dd636841bbf7ad97000c26e6e59.versioning",
+            "s3.buckets.f926a6e139099b025435cc2a6bb76d277bba966e.versioning",
+            "s3.buckets.faa0a4e830b05b9998d9da2771b792508af40d7f.versioning",
+            "s3.buckets.fd1d30a73503cafb7666f344ab2ee29bd051957d.versioning",
+            "s3.buckets.eb5d8469d7a179954d7a06981a1240acb10361ef.versioning",
+            "s3.buckets.d5fc4d6de150c8e44229b15d072d3c0e78bde82e.versioning",
+            "s3.buckets.93bc900e332dabc0b346bc013761a4447fb1288f.versioning",
+            "s3.buckets.72483e3bf3b78c7d93bce65d5a31b563a6d40cc2.versioning",
+            "s3.buckets.4f952f841e0c81b9561b4099aaac72708d80721e.versioning",
+            "s3.buckets.03a51551791d5a28a8bab6b76090f4df96d78f77.versioning",
+            "s3.buckets.f00f3ca49d4cc764759a83dc109b97a97b2d2e51.versioning",
+            "s3.buckets.610b473ed2ddb76101743fe850d0a8de64cd3fd1.versioning"
+        ]
+    },
+    "vpc": {
+        "vpc-subnet-without-flow-log": [
+            "vpc.regions.us-east-1.vpcs.vpc-0d9d4b68.subnets.subnet-008cbb28.NoFlowLog",
+            "vpc.regions.us-east-1.vpcs.vpc-0d9d4b68.subnets.subnet-5bef8f61.NoFlowLog",
+            "vpc.regions.us-east-1.vpcs.vpc-0d9d4b68.subnets.subnet-c0908786.NoFlowLog",
+            "vpc.regions.us-east-1.vpcs.vpc-0d9d4b68.subnets.subnet-f2fa0f85.NoFlowLog",
+            "vpc.regions.us-east-1.vpcs.vpc-0d9d4b68.subnets.subnet-f59206f9.NoFlowLog",
+            "vpc.regions.us-east-1.vpcs.vpc-0d9d4b68.subnets.subnet-fced8599.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-230afa46.subnets.subnet-26c60543.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-230afa46.subnets.subnet-6b0e0e2d.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-230afa46.subnets.subnet-98b454ef.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-5a1a583f.subnets.subnet-23a1d754.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-5a1a583f.subnets.subnet-24a1d753.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-5a1a583f.subnets.subnet-2cacfc49.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-5a1a583f.subnets.subnet-2eacfc4b.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-5a1a583f.subnets.subnet-8671f9df.NoFlowLog",
+            "vpc.regions.us-west-2.vpcs.vpc-5a1a583f.subnets.subnet-b971f9e0.NoFlowLog"
+        ]
+    }
+}

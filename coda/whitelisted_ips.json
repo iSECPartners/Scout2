@@ -1,0 +1,33 @@
+{
+    "createDate": "2018-04-23-17-16-42",
+    "prefixes": [
+        {
+            "ip_prefix": "52.0.2.4/32",
+            "name": " FiveTran"
+        },
+        {
+            "ip_prefix": "209.210.153.235/32",
+            "name": " Mode Analytics"
+        },
+	{
+            "ip_prefix": "54.164.204.122/32",
+            "name": " Mode Analytics"
+        },
+	{
+            "ip_prefix": "54.172.100.146/32",
+            "name": " Mode Analytics"
+        },
+	{
+            "ip_prefix": "54.68.30.98/32",
+            "name": " Mode Analytics"
+        },
+        {
+            "ip_prefix": "54.68.45.3/32",
+            "name": " Mode Analytics"
+        },
+        {
+            "ip_prefix": "67.170.101.227/32",
+            "name": " Mode Analytics"
+        }
+    ]
+}
