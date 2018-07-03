@@ -52,22 +52,22 @@ class S3Config(BaseConfig):
             return
 
         api_client = params['api_clients'][bucket['region']]
-        get_s3_bucket_logging(api_client, bucket['name'], bucket)
-        get_s3_bucket_versioning(api_client, bucket['name'], bucket)
-        get_s3_bucket_webhosting(api_client, bucket['name'], bucket)
-        bucket['grantees'] = get_s3_acls(api_client, bucket['name'], bucket)
-        # TODO:
-        # CORS
-        # Lifecycle
-        # Notification ?
-        # Get bucket's policy
-        get_s3_bucket_policy(api_client, bucket['name'], bucket)
-        # If requested, get key properties
-        #if params['check_encryption'] or params['check_acls']:
-        #    get_s3_bucket_keys(api_client, bucket['name'], bucket, params['check_encryption'],
-        #                       params['check_acls'])
-        bucket['id'] = self.get_non_aws_id(bucket['name'])
-        self.buckets[bucket['id']] = bucket
+        if get_s3_bucket_logging(api_client, bucket['name'], bucket):
+            get_s3_bucket_versioning(api_client, bucket['name'], bucket)
+            get_s3_bucket_webhosting(api_client, bucket['name'], bucket)
+            bucket['grantees'] = get_s3_acls(api_client, bucket['name'], bucket)
+            # TODO:
+            # CORS
+            # Lifecycle
+            # Notification ?
+            # Get bucket's policy
+            get_s3_bucket_policy(api_client, bucket['name'], bucket)
+            # If requested, get key properties
+            #if params['check_encryption'] or params['check_acls']:
+            #    get_s3_bucket_keys(api_client, bucket['name'], bucket, params['check_encryption'],
+            #                       params['check_acls'])
+            bucket['id'] = self.get_non_aws_id(bucket['name'])
+            self.buckets[bucket['id']] = bucket
 
 
 
@@ -225,10 +225,12 @@ def get_s3_bucket_logging(api_client, bucket_name, bucket_info):
             bucket_info['logging_stuff'] = logging
         else:
             bucket_info['logging'] = 'Disabled'
+        return True
     except Exception as e:
         printError('Failed to get logging configuration for %s' % bucket_name)
         printException(e)
         bucket_info['logging'] = 'Unknown'
+        return False
 
 def get_s3_bucket_webhosting(api_client, bucket_name, bucket_info):
     try:
