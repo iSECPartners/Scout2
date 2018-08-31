@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import copy
 import netaddr
 
 from opinel.utils.aws import get_name
