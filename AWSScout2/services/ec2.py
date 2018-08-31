@@ -3,6 +3,8 @@
 EC2-related classes and functions
 """
 
+import netaddr
+
 # TODO: move a lot of this to VPCconfig, and use some sort of filter to only list SGs in EC2 classic
 
 from opinel.utils.aws import get_name
